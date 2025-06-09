@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ```bash
 DATABASES = {
     'default': {
-        'ENGINE': 'sql_server.pyodbc',
+        'ENGINE': 'mssql',
         'NAME': 'TuBaseDeDatos',
         'USER': 'tu_usuario',
         'PASSWORD': 'tu_contraseña',
