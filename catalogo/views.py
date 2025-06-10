@@ -4,6 +4,8 @@ from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.db import IntegrityError
 
 # Create your views here.
 def index(request):
@@ -17,8 +19,9 @@ def registrarUsuario(request):
             try:
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 user.save()
+                login(request, user)
                 return redirect('index')
-            except:
+            except IntegrityError:
                 return render(request, 'registro.html', {'form': UserCreationForm, 'error': 'El nombre de usuario ya existe'})
         return render(request, 'registro.html', {'form': UserCreationForm, 'error': 'Las contraseñas no coinciden'})
 
