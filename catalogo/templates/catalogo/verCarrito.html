@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Tu Carrito</h1>
+<ul>
+    {% for item in carrito.items.all %}
+    <li>{{ item.componente.nombre }} x {{ item.cantidad }} = ${{ item.subtotal }}</li>
+    {% endfor %}
+</ul>
+<h3>Total: ${{ carrito.total }}</h3>
+{% endblock %}
