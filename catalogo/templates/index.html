@@ -1,4 +1,71 @@
 {% extends 'base.html' %}
+{% block title %}PCStore - Tu tienda de tecnología{% endblock %}
 
 {% block content %}
+<!-- Hero principal -->
+<div class="bg-dark text-white py-5">
+  <div class="container text-center">
+    <h1 class="display-3">Bienvenido a <span class="text-warning">PCStore</span></h1>
+    <p class="lead">Encuentra las mejores ofertas en tecnología, computadores, periféricos y más.</p>
+    <div class="mt-4">
+      <a href="/listarProductos" class="btn btn-warning btn-lg me-2">Ver Productos</a>
+      {% if not user.is_authenticated %}
+        <a href="{% url 'registro' %}" class="btn btn-outline-light btn-lg">Crear Cuenta</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Productos destacados -->
+<div class="container py-5">
+  <h2 class="mb-4 text-center">Productos destacados</h2>
+  <div class="row g-4">
+
+    <!-- Tarjeta de producto 1 -->
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/400x250.png?text=Notebook+Gamer" class="card-img-top" alt="Notebook Gamer">
+        <div class="card-body">
+          <h5 class="card-title">Notebook Gamer XYZ</h5>
+          <p class="card-text">Procesador Intel i7, 16GB RAM, RTX 4060. ¡Potencia para jugar al máximo!</p>
+          <a href="/listarProductos" class="btn btn-outline-primary">Ver más</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de producto 2 -->
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/400x250.png?text=Monitor+Curvo" class="card-img-top" alt="Monitor Curvo">
+        <div class="card-body">
+          <h5 class="card-title">Monitor Curvo 27” 144Hz</h5>
+          <p class="card-text">Pantalla inmersiva para una experiencia de juego envolvente.</p>
+          <a href="/listarProductos" class="btn btn-outline-primary">Ver más</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de producto 3 -->
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/400x250.png?text=PC+Armado" class="card-img-top" alt="PC Armado">
+        <div class="card-body">
+          <h5 class="card-title">PC Armado Ryzen 5</h5>
+          <p class="card-text">Ideal para trabajo y gaming. Incluye SSD, 16GB RAM y RX 6600.</p>
+          <a href="/listarProductos" class="btn btn-outline-primary">Ver más</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Llamado final -->
+<div class="bg-light py-5">
+  <div class="container text-center">
+    <h3>¿Listo para actualizar tu setup?</h3>
+    <p>Explora cientos de productos al mejor precio.</p>
+    <a href="/listarProductos" class="btn btn-success btn-lg">Explorar catálogo</a>
+  </div>
+</div>
 {% endblock %}

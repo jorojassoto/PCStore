@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Agregar Producto - PCStore{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Agregar Producto</h2>
+  <form method="post" enctype="multipart/form-data">  <!-- importante enctype -->
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>
+{% endblock %}

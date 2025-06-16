@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'PCStore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'PCStoreDB',
+        'NAME': 'PCStore',
         'USER': 'django',
         'PASSWORD': '123',
         'HOST': 'localhost',
@@ -129,3 +129,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

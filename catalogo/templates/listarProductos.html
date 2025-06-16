@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Productos - PCStore{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Catálogo de Productos</h2>
+
+  <div class="row g-4">
+    {% for producto in productos %}
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" class="img-fluid" alt="{{ producto.nombre }}">
+        {% else %}
+        <img src="https://via.placeholder.com/400x250.png?text=Sin+Imagen" class="img-fluid" alt="Sin imagen">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title">{{ producto.nombre }}</h5>
+          <p class="card-text">{{ producto.descripcion|truncatechars:100 }}</p>
+          <p class="text-success fw-bold">${{ producto.precio|floatformat:0 }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+      <p>No hay productos disponibles.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

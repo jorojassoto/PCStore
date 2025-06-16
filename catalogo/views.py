@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 
 # Create your views here.
@@ -12,20 +12,16 @@ def index(request):
     return render(request, 'index.html')
 
 def registrarUsuario(request):
-    if request.method == 'GET':
-        return render(request, 'registro.html', {'form': UserCreationForm})
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                login(request, user)
-                return redirect('index')
-            except IntegrityError:
-                return render(request, 'registro.html', {'form': UserCreationForm, 'error': 'El nombre de usuario ya existe'})
-        return render(request, 'registro.html', {'form': UserCreationForm, 'error': 'Las contraseñas no coinciden'})
+        form = UserCreationForm()
+    return render(request, 'registration/registro.html', {'form': form})
 
-def registrarComponente(request):
+def registrarProducto(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST)
         if form.is_valid():
@@ -33,15 +29,36 @@ def registrarComponente(request):
             return redirect('listarProductos')
     else:
         form = ProductoForm()
-    return render(request, 'catalogo/registrarProducto.html', {'form': form})
+    return render(request, 'registrarProducto.html', {'form': form})
 
 def listarProductos(request):
     productos = Producto.objects.all()
-    return render(request, 'catalogo/listarProductos.html', {'productos': productos})
+    return render(request, 'listarProductos.html', {'productos': productos})
 
 def verCarrito(request):
     carrito, created = Carrito.objects.get_or_create(usuario=request.user)
-    return render(request, 'catalogo/verCarrito.html', {'carrito': carrito})
+    return render(request, 'verCarrito.html', {'carrito': carrito})
+
+def cerrarSesion(request):
+    logout(request)
+    return redirect('index')
+
+def iniciarSesion(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, username=cd['username'], password=cd['password'])
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else: 
+                return HttpResponse("Credenciales inválidas")
+        else:
+            return HttpResponse("Formulario inválido")
+    else:
+        form = LoginForm()
+        return render(request, 'registration/login.html', {'form': form})
 
 
             
